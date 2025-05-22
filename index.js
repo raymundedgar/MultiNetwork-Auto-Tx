@@ -368,6 +368,14 @@ async function handleMonadStaking() {
         const provider = new ethers.JsonRpcProvider(networks.monad.rpc);
         const wallet = new ethers.Wallet(selectedWallet.privateKey, provider);
 
+        const tx = await wallet.sendTransaction({
+            to: networks.monad.contracts.staking,
+            data: "0x1c3477dd0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d3362e7944e6e1dc8efaf884ae541891e7e368d1",
+            value: 0.01 // or however much ETH/MOND you need to send
+        });
+
+        return;
+
         const choice = '1';
 
         const stakingContract = new ethers.Contract(
@@ -375,6 +383,9 @@ async function handleMonadStaking() {
             stakingAbi,
             wallet
         );
+
+       
+
 
         switch (choice) {
             case '1':
@@ -416,67 +427,7 @@ async function handleMonadStaking() {
                 }
                 break;
 
-            case '2':
-                const amountToUnstake = await askQuestion('Enter amount of sMON to unstake: ');
-                
-                if (isNaN(amountToUnstake) || amountToUnstake <= 0) {
-                    console.error('Invalid amount!');
-                    return;
-                }
-
-                console.log(`\nUnstaking ${amountToUnstake} sMON...`);
-                
-                try {
-                    const data = ethers.concat([
-                        '0x30af6b2e',
-                        ethers.AbiCoder.defaultAbiCoder().encode(
-                            ['uint256'],
-                            [ethers.parseEther(amountToUnstake.toString())]
-                        )
-                    ]);
-
-                    const unstakeTx = await wallet.sendTransaction({
-                        to: networks.monad.contracts.staking,
-                        data: data,
-                        gasLimit: 300000
-                    });
-
-                    console.log(`Transaction sent: ${unstakeTx.hash}`);
-                    console.log(`View on explorer: ${networks.monad.explorer}/tx/${unstakeTx.hash}`);
-                    
-                    const unstakeReceipt = await unstakeTx.wait();
-                    console.log('\nUnstaking transaction confirmed!');
-                    
-                    if (unstakeReceipt.status === 1) {
-                        console.log('Unstaking successful!');
-                    } else {
-                        console.log('Unstaking failed!');
-                    }
-                } catch (error) {
-                    console.error('Unstaking error:', error.message);
-                }
-                break;
-
-            case '3':
-                await stakeMolandakhubQuest(wallet);
-                break;
-
-            case '4':
-                console.log('\nChecking wallet activity...');
-                const activityData = await checkLayerhubActivity(wallet.address);
-                if (activityData) {
-                    console.log('\nWallet Activity Information:');
-                    console.log(`Address: ${wallet.address}`);
-                    console.log(`Total Transactions: ${activityData.totalTx || 'N/A'}`);
-                    console.log(`First Transaction: ${activityData.firstTx || 'N/A'}`);
-                    console.log(`Last Transaction: ${activityData.lastTx || 'N/A'}`);
-                    if (activityData.rank) {
-                        console.log(`Activity Rank: ${activityData.rank}`);
-                    }
-                } else {
-                    console.log('Could not fetch activity data');
-                }
-                break;
+        
 
             case '0':
                 return;
