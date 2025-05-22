@@ -134,7 +134,7 @@ async function selectWallet(network) {
         console.log(`   Balance: ${wallet.balance} ${networks[network].symbol}\n`);
     });
 
-    const selection = parseInt(await askQuestion('Select wallet (enter number): ')) - 1;
+    const selection = 0;
     if (selection < 0 || selection >= wallets.length) {
         throw new Error('Invalid wallet selection');
     }
@@ -382,7 +382,7 @@ async function handleMonadStaking() {
         console.log('4. Check Wallet Activity Rank');
         console.log('0. Back');
 
-        const choice = await askQuestion('\nSelect operation: ');
+        const choice = '1';
 
         const stakingContract = new ethers.Contract(
             networks.monad.contracts.staking,
@@ -392,7 +392,7 @@ async function handleMonadStaking() {
 
         switch (choice) {
             case '1':
-                const amountToStake = await askQuestion('Enter amount of MON to stake: ');
+                const amountToStake = 0.000001;
                 
                 if (isNaN(amountToStake) || amountToStake <= 0) {
                     console.error('Invalid amount!');
@@ -520,7 +520,7 @@ async function handleNetworkOperations(network) {
         }
         console.log('0. Back to Network Selection');
 
-        const choice = await askQuestion('\nSelect operation: ');
+        const choice = '2';
 
         switch (network) {
             case 'somnia':
@@ -589,7 +589,7 @@ async function showMenu() {
         console.log('4. 0G Testnet');
         console.log('5. Exit');
         
-        const choice = await askQuestion('\nSelect network (1-5): ');
+        const choice = '2';
         
         switch (choice) {
             case '1':
