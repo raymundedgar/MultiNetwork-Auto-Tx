@@ -115,7 +115,6 @@ async function selectWallet(network) {
         throw new Error('No private keys found in pk.txt');
     }
 
-    console.log('\n=== Available Wallets ===');
     const provider = new ethers.JsonRpcProvider(networks[network].rpc);
     
     const wallets = await Promise.all(privateKeys.map(async (pk, index) => {
@@ -128,12 +127,7 @@ async function selectWallet(network) {
             balance: ethers.formatEther(balance)
         };
     }));
-
-    wallets.forEach((wallet, index) => {
-        console.log(`${index + 1}. Address: ${wallet.address}`);
-        console.log(`   Balance: ${wallet.balance} ${networks[network].symbol}\n`);
-    });
-
+    
     const selection = 0;
     if (selection < 0 || selection >= wallets.length) {
         throw new Error('Invalid wallet selection');
@@ -373,14 +367,6 @@ async function handleMonadStaking() {
         const selectedWallet = await selectWallet('monad');
         const provider = new ethers.JsonRpcProvider(networks.monad.rpc);
         const wallet = new ethers.Wallet(selectedWallet.privateKey, provider);
-        
-        console.log('\n=== Monad Staking Operations ===');
-        console.log(`Using wallet: ${selectedWallet.address}`);
-        console.log('1. Stake MON on kitsu.xyz');
-        console.log('2. Unstake MON on kitsu.xyz');
-        console.log('3. Stake 0.1 MON (Molandakhub Quest)');
-        console.log('4. Check Wallet Activity Rank');
-        console.log('0. Back');
 
         const choice = '1';
 
@@ -506,20 +492,6 @@ async function handleMonadStaking() {
 
 async function handleNetworkOperations(network) {
     while (true) {
-        console.log(`\n=== ${networks[network].name} Operations ===`);
-        if (network === 'somnia') {
-            console.log('1. Generate Wallets & Claim Faucet');
-            console.log('2. Transfer Tokens');
-        } else if (network === 'monad') {
-            console.log('1. Transfer Tokens');
-            console.log('2. Staking Operations');
-        } else if (network === 'nexus') {
-            console.log('1. Transfer Tokens');
-        } else if (network === 'zeroGravity') { // Baris khusus untuk 0G Testnet
-            console.log('1. Transfer Tokens');
-        }
-        console.log('0. Back to Network Selection');
-
         const choice = '2';
 
         switch (network) {
