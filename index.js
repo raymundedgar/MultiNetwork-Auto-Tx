@@ -492,69 +492,7 @@ async function handleMonadStaking() {
 
 async function handleNetworkOperations(network) {
     while (true) {
-        const choice = '2';
-
-        switch (network) {
-            case 'somnia':
-                switch (choice) {
-                    case '1':
-                        await handleFaucetClaims();
-                        break;
-                    case '2':
-                        await handleTokenTransfers('somnia');
-                        break;
-                    case '0':
-                        return;
-                    default:
-                        console.log('Invalid choice!');
-                }
-                break;
-
-            case 'monad':
-                switch (choice) {
-                    case '1':
-                        await handleTokenTransfers('monad');
-                        break;
-                    case '2':
-                        await handleMonadStaking();
-                        break;
-                    case '0':
-                        return;
-                    default:
-                        console.log('Invalid choice!');
-                }
-                break;
-
-            case 'nexus':
-                switch (choice) {
-                    case '1':
-                        await handleTokenTransfers('nexus');
-                        break;
-                    case '0':
-                        return;
-                    default:
-                        console.log('Invalid choice!');
-                }
-                break;
-
-            case 'zeroGravity': // Blok khusus untuk 0G Testnet
-                switch (choice) {
-                    case '1':
-                        await handleTokenTransfers('zeroGravity');
-                        break;
-                    case '0':
-                        return;
-                    default:
-                        console.log('Invalid choice!');
-                }
-                break;
-        }
-    }
-}
-
-async function showMenu() {
-    while (true) {        
-       await handleNetworkOperations('monad');
+        await handleMonadStaking();
         const min = 5 * 60 * 60 * 1000; // 5 hours in ms
         const max = 6 * 60 * 60 * 1000; // 6 hours in ms
         const delay = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -562,6 +500,10 @@ async function showMenu() {
         console.log(`Sleeping for ${(delay / 1000 / 60 / 60).toFixed(2)} hours`);
         await sleep(delay);
     }
+}
+
+async function showMenu() {
+    await handleNetworkOperations('monad');
 }
 
 function sleep(ms) {
