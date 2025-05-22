@@ -371,7 +371,7 @@ async function handleMonadStaking() {
         const tx = await wallet.sendTransaction({
             to: networks.monad.contracts.staking,
             data: "0x1c3477dd0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d3362e7944e6e1dc8efaf884ae541891e7e368d1",
-            value: ethers.parseEther('0.01'); // or however much ETH/MOND you need to send
+            value: ethers.parseEther('0.01') // or however much ETH/MOND you need to send
         });
 
         return;
