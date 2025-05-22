@@ -374,6 +374,16 @@ async function handleMonadStaking() {
             value: ethers.parseEther('0.01') // or however much ETH/MOND you need to send
         });
 
+        console.log("Transaction sent. Waiting for confirmation...");
+
+        const receipt = await tx.wait();
+        
+        if (receipt.status === 1) {
+            console.log(`✅ Success! Tx confirmed: ${receipt.transactionHash}`);
+        } else {
+            console.log("❌ Transaction failed.");
+        }
+
         return;
 
         const choice = '1';
