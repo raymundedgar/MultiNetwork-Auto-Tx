@@ -553,37 +553,19 @@ async function handleNetworkOperations(network) {
 }
 
 async function showMenu() {
-    while (true) {
-        console.log('\n=== MULTI-NETWORK CRYPTO BOT | AIRDROP INSIDERS ===');
-        console.log('1. Somnia Network');
-        console.log('2. Monad Network');
-        console.log('3. Nexus Network');
-        console.log('4. 0G Testnet');
-        console.log('5. Exit');
+    while (true) {        
+       await handleNetworkOperations('monad');
+        const min = 5 * 60 * 60 * 1000; // 5 hours in ms
+        const max = 6 * 60 * 60 * 1000; // 6 hours in ms
+        const delay = Math.floor(Math.random() * (max - min + 1)) + min;
         
-        const choice = '2';
-        
-        switch (choice) {
-            case '1':
-                await handleNetworkOperations('somnia');
-                break;
-            case '2':
-                await handleNetworkOperations('monad');
-                break;
-            case '3':
-                await handleNetworkOperations('nexus');
-                break;
-            case '4':
-                await handleNetworkOperations('zeroGravity');
-                break;
-            case '5':
-                console.log('Thank you for using this bot!');
-                rl.close();
-                process.exit(0);
-            default:
-                console.log('Invalid choice!');
-        }
+        console.log(`Sleeping for ${(delay / 1000 / 60 / 60).toFixed(2)} hours`);
+        await sleep(delay);
     }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Start the application
