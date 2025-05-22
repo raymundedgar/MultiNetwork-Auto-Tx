@@ -310,7 +310,7 @@ const stakingAbi = [
         stateMutability: 'nonpayable',
         inputs: [{ type: 'uint256', name: 'amount' }],
         outputs: [{ type: 'bool' }],
-        selector: '0x30af6b2e'
+        selector: '0x1c3477dd'
     }
 ];
 
