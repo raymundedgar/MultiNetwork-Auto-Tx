@@ -392,7 +392,7 @@ async function handleMonadStaking() {
 
         switch (choice) {
             case '1':
-                const amountToStake = 0.000001;
+                const amountToStake = 0.00001;
                 
                 if (isNaN(amountToStake) || amountToStake <= 0) {
                     console.error('Invalid amount!');
